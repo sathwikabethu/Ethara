@@ -14,6 +14,8 @@ const queryClient = new QueryClient({
   },
 });
 
+console.log('Main.tsx is executing...');
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

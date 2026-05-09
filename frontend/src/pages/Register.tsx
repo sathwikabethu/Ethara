@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema, RegisterInput } from '@ethara/shared';
+import { registerSchema, type RegisterInput } from '@ethara/shared';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../lib/axios';
 import { Link, useNavigate } from 'react-router-dom';

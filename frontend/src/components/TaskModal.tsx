@@ -7,7 +7,7 @@ import { api } from '../lib/axios';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import toast from 'react-hot-toast';
-import { X } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
 export default function TaskModal({ 
@@ -98,6 +98,20 @@ export default function TaskModal({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', taskId] });
       toast.success('Comment added');
+    }
+  });
+
+  const deleteTask = useMutation({
+    mutationFn: async () => {
+      return api.delete(`/projects/${projectId}/tasks/${taskId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
+      toast.success('Task deleted');
+      onClose();
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.error || 'Failed to delete task');
     }
   });
 
@@ -216,13 +230,32 @@ export default function TaskModal({
           )}
         </div>
 
-        <div className="p-4 border-t border-slate-200 flex justify-end gap-2 bg-slate-50 rounded-b-xl">
-          <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-          {canEdit && (
-            <Button type="submit" form="task-form" disabled={saveTask.isPending || isSubmitting}>
-              {saveTask.isPending ? 'Saving...' : 'Save Changes'}
-            </Button>
-          )}
+        <div className="p-4 border-t border-slate-200 flex justify-between gap-2 bg-slate-50 rounded-b-xl">
+          <div>
+            {isEditing && canEdit && (
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
+                onClick={() => {
+                  if (confirm('Are you sure you want to delete this task?')) {
+                    deleteTask.mutate();
+                  }
+                }}
+                disabled={deleteTask.isPending}
+              >
+                <Trash2 className="w-4 h-4 mr-2" /> Delete
+              </Button>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+            {canEdit && (
+              <Button type="submit" form="task-form" disabled={saveTask.isPending || isSubmitting}>
+                {saveTask.isPending ? 'Saving...' : 'Save Changes'}
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -42,13 +42,13 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Welcome back, {user?.name}</h1>
-        <p className="mt-1 text-sm text-slate-500">Here's what's happening across your projects.</p>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {user?.name}</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Here's what's happening across your projects.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
-          <div key={card.name} className="bg-white overflow-hidden shadow-sm rounded-lg border border-slate-200">
+          <div key={card.name} className="bg-white dark:bg-slate-900 overflow-hidden shadow-sm rounded-lg border border-slate-200 dark:border-slate-800">
             <div className="p-5">
               <div className="flex items-center">
                 <div className={`flex-shrink-0 rounded-md p-3 ${card.bg}`}>
@@ -56,9 +56,9 @@ export default function Dashboard() {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-slate-500 truncate">{card.name}</dt>
+                    <dt className="text-sm font-medium text-slate-500 dark:text-slate-400 truncate">{card.name}</dt>
                     <dd>
-                      <div className="text-2xl font-bold text-slate-900">{card.stat}</div>
+                      <div className="text-2xl font-bold text-slate-900 dark:text-white">{card.stat}</div>
                     </dd>
                   </dl>
                 </div>
@@ -70,20 +70,20 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Tasks Due This Week */}
-        <div className="bg-white shadow-sm rounded-lg border border-slate-200 overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-slate-200">
-            <h3 className="text-lg leading-6 font-medium text-slate-900">Tasks Due This Week</h3>
+        <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <div className="px-4 py-5 sm:px-6 border-b border-slate-200 dark:border-slate-800">
+            <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-white">Tasks Due This Week</h3>
           </div>
-          <ul className="divide-y divide-slate-200 h-96 overflow-y-auto">
+          <ul className="divide-y divide-slate-200 dark:divide-slate-800 h-96 overflow-y-auto">
             {stats?.tasksDueThisWeek.length === 0 ? (
               <li className="p-6 text-center text-slate-500">No tasks due this week!</li>
             ) : (
               stats?.tasksDueThisWeek.map((task: any) => (
-                <li key={task.id} className="px-4 py-4 sm:px-6 hover:bg-slate-50 transition-colors">
+                <li key={task.id} className="px-4 py-4 sm:px-6 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Link to={`/projects/${task.projectId}`} className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-primary-600 truncate">{task.title}</p>
-                      <p className="mt-1 text-sm text-slate-500">{task.project.name}</p>
+                      <p className="text-sm font-medium text-primary-600 dark:text-primary-400 truncate">{task.title}</p>
+                      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{task.project.name}</p>
                     </div>
                     <div className="ml-2 flex-shrink-0 flex flex-col items-end">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -99,11 +99,11 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white shadow-sm rounded-lg border border-slate-200 overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-slate-200">
-            <h3 className="text-lg leading-6 font-medium text-slate-900">Recent Activity</h3>
+        <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <div className="px-4 py-5 sm:px-6 border-b border-slate-200 dark:border-slate-800">
+            <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-white">Recent Activity</h3>
           </div>
-          <ul className="divide-y divide-slate-200 h-96 overflow-y-auto">
+          <ul className="divide-y divide-slate-200 dark:divide-slate-800 h-96 overflow-y-auto">
             {stats?.recentActivity.length === 0 ? (
               <li className="p-6 text-center text-slate-500">No recent activity.</li>
             ) : (
@@ -112,10 +112,10 @@ export default function Dashboard() {
                   <div className="flex space-x-3">
                     <div className="flex-1 space-y-1">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-slate-900">{log.user.name}</h3>
-                        <p className="text-sm text-slate-500">{new Date(log.createdAt).toLocaleDateString()}</p>
+                        <h3 className="text-sm font-medium text-slate-900 dark:text-white">{log.user.name}</h3>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{new Date(log.createdAt).toLocaleDateString()}</p>
                       </div>
-                      <p className="text-sm text-slate-500">
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
                         {log.action === 'TASK_CREATED' && `created task in ${log.project.name}`}
                         {log.action === 'TASK_STATUS_CHANGED' && `moved a task from ${log.meta?.oldStatus} to ${log.meta?.newStatus} in ${log.project.name}`}
                         {log.action === 'PROJECT_CREATED' && `created project ${log.project.name}`}

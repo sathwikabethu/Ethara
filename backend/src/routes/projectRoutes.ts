@@ -17,6 +17,8 @@ router.delete('/:id', requireProjectAdmin, ProjectController.delete);
 router.post('/:id/members', requireProjectAdmin, ProjectController.addMember);
 router.delete('/:id/members/:userId', requireProjectAdmin, ProjectController.removeMember);
 
+router.get('/:id/activity', requireProjectMember, ProjectController.listActivity);
+
 router.use('/:id/tasks', taskRoutes);
 
 export default router;

@@ -54,4 +54,9 @@ export class ProjectController {
       throw error;
     }
   }
+
+  static async listActivity(req: Request, res: Response) {
+    const activity = await ProjectService.listActivity(req.params.id as string);
+    res.json({ success: true, data: activity });
+  }
 }

@@ -165,4 +165,15 @@ export class ProjectService {
 
     return true;
   }
+
+  static async listActivity(projectId: string) {
+    return prisma.activityLog.findMany({
+      where: { projectId },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+  }
 }
